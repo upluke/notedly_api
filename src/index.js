@@ -5,17 +5,45 @@ const app= express()
 // Run the server on a port specified in our .env file or port 4000
 const port=process.env.PORT || 4000;
 
-// construct a schema, using GraphQL's schema language
-const typeDefs=gql`
-    type Query{
-        hello: String 
+let notes = [
+    {
+      id: '1',
+      content: 'This is a note',
+      author: 'Adam Scott'
+    },
+    {
+      id: '2',
+      content: 'This is another note',
+      author: 'Harlow Everly'
+    },
+    {
+      id: '3',
+      content: 'Oh hey look, another note!',
+      author: 'Riley Harrison'
     }
-`
+  ];
+
+// construct a schema, using GraphQL's schema language
+const typeDefs = gql`
+  type Note {
+    id: ID
+    content: String
+    author: String
+  }
+  type Query {
+    hello: String
+    notes: [Note]
+    note(id: ID): Note
+  }
+  type Mutation {
+    newNote(content: String!): Note
+  }
+`;
 // provide resolver funcitons for our schema fields
 const resolvers={
     Query:{
         hello: ()=>'hello world'
-    }
+    } 
 }
 
 
