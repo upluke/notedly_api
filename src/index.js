@@ -26,14 +26,14 @@ let notes = [
 // construct a schema, using GraphQL's schema language
 const typeDefs = gql`
   type Note {
-    id: ID
+    id: ID!
     content: String
     author: String
   }
   type Query {
     hello: String
-    notes: [Note]
-    note(id: ID): Note
+    notes: [Note]!
+    # note(id: ID): Note
   }
   type Mutation {
     newNote(content: String!): Note
@@ -42,7 +42,8 @@ const typeDefs = gql`
 // provide resolver funcitons for our schema fields
 const resolvers={
     Query:{
-        hello: ()=>'hello world'
+        hello: ()=>'hello world',
+        notes:()=>notes
     } 
 }
 
