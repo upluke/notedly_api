@@ -33,17 +33,22 @@ const typeDefs = gql`
   type Query {
     hello: String
     notes: [Note]!
-    # note(id: ID): Note
+    note(id: ID): Note
   }
-  type Mutation {
-    newNote(content: String!): Note
-  }
+#   type Mutation {
+#     newNote(content: String!): Note
+#   }
 `;
 // provide resolver funcitons for our schema fields
 const resolvers={
     Query:{
         hello: ()=>'hello world',
-        notes:()=>notes
+        notes:()=>notes,
+        note:(parent, args)=>{
+            return notes.find(note=>note.id === args.id)
+        }
+
+        
     } 
 }
 
