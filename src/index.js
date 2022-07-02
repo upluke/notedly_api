@@ -35,22 +35,32 @@ const typeDefs = gql`
     notes: [Note]!
     note(id: ID): Note
   }
-#   type Mutation {
-#     newNote(content: String!): Note
-#   }
+  type Mutation {
+    newNote(content: String!): Note
+  }
 `;
 // provide resolver funcitons for our schema fields
-const resolvers={
-    Query:{
-        hello: ()=>'hello world',
-        notes:()=>notes,
-        note:(parent, args)=>{
-            return notes.find(note=>note.id === args.id)
-        }
-
-        
-    } 
-}
+const resolvers = {
+    Query: {
+      hello: () => 'Hello world!',
+      notes: () => notes,
+      note: (parent, args) => {
+        return notes.find(note => note.id === args.id);
+      }
+    },
+    Mutation: {
+      newNote: (parent, args) => {
+        let noteValue = {
+          id: String(notes.length + 1),
+          content: args.content,
+          author: 'Luke'
+        };
+        notes.push(noteValue);
+        return noteValue;
+      }
+    }
+  };
+  
 
 
 // Apollo Server setup
